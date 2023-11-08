@@ -11,18 +11,18 @@ function generateRandomMap(rows, cols, start, goal)
         end
 
         -- Verifique se o valor não bloqueia o caminho do início ao destino
-        if (r == start.linha and c == start.coluna) or (r == goal.linha and c == goal.coluna) then
+        if (r == start.row and c == start.col) or (r == goal.row and c == goal.col) then
             return true
         end
 
         -- Verifique se o valor não é um obstáculo para o caminho
         if not map[r] then
-            map[r] = {}  -- Inicialize a linha se necessário
+            map[r] = {}  -- Inicialize a row se necessário
         end
 
-        if r == start.linha then
-            local step = c < start.coluna and 1 or -1
-            for col = start.coluna, c, step do
+        if r == start.row then
+            local step = c < start.col and 1 or -1
+            for col = start.col, c, step do
                 if not map[r][col] then
                     map[r][col] = 1  -- Valor padrão, se não estiver inicializado
                 end
@@ -30,11 +30,11 @@ function generateRandomMap(rows, cols, start, goal)
                     return false
                 end
             end
-        elseif c == start.coluna then
-            local step = r < start.linha and 1 or -1
-            for row = start.linha, r, step do
+        elseif c == start.col then
+            local step = r < start.row and 1 or -1
+            for row = start.row, r, step do
                 if not map[row] then
-                    map[row] = {}  -- Inicialize a linha se necessário
+                    map[row] = {}  -- Inicialize a row se necessário
                 end
                 if not map[row][c] then
                     map[row][c] = 1  -- Valor padrão, se não estiver inicializado
@@ -48,7 +48,7 @@ function generateRandomMap(rows, cols, start, goal)
         return true
     end
 
-    -- Inicialize o mapa com valores aleatórios
+    -- Inicialize o map com valores aleatórios
     for r = 1, rows do
         map[r] = {}
         for c = 1, cols do

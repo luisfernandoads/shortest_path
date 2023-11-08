@@ -9,8 +9,8 @@ function dijkstra(graph, start, goal)
         previous[node] = nil
     end
 
-    local startNode = start.linha * indexMultiplier + start.coluna
-    local goalNode = goal.linha * indexMultiplier + goal.coluna
+    local startNode = start.row * indexMultiplier + start.col
+    local goalNode = goal.row * indexMultiplier + goal.col
 
     distance[startNode] = 0
 
@@ -57,8 +57,8 @@ end
 
 -- Função para busca em profundidade (DFS)
 function depthFirstSearch(graph, start, goal)
-    local startNode = start.linha * indexMultiplier + start.coluna
-    local goalNode = goal.linha * indexMultiplier + goal.coluna
+    local startNode = start.row * indexMultiplier + start.col
+    local goalNode = goal.row * indexMultiplier + goal.col
 
     local visited = {}
     local path = {}

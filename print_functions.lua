@@ -1,16 +1,16 @@
--- Função para imprimir a matriz do mapa
+-- Função para imprimir a matriz do map
 function printMap(map)
-    -- Itera sobre as linhas da matriz do mapa
+    -- Itera sobre as rows da matriz do map
     for i = 1, #map do
-        local row = map[i]  -- Obtém a linha atual da matriz
-        local rowStr = ""   -- Inicializa uma string para a linha
+        local row = map[i]  -- Obtém a row atual da matriz
+        local rowStr = ""   -- Inicializa uma string para a row
 
-        -- Itera sobre as colunas da linha atual
+        -- Itera sobre as cols da row atual
         for j = 1, #row do
             rowStr = rowStr .. row[j] .. " "  -- Adiciona o valor da célula seguido de um espaço à string
         end
 
-        -- Imprime a string representando a linha da matriz
+        -- Imprime a string representando a row da matriz
         print(rowStr)
     end
 end
@@ -102,7 +102,7 @@ function saveGraphAsDotWithSubgraph(graph, path, path_algorithm)
     -- metadados do grafo
     dotContent = dotContent .. "graph [\n"
     dotContent = dotContent .. "layout = neato\n"
-    dotContent = dotContent .. "label = \"" .. path_algorithm .. "\"\n"
+    dotContent = dotContent .. "label = \"" .. path_algorithm:upper() .. "\"\n"
     dotContent = dotContent .. "fontsize= \"40pt\"\n"
     dotContent = dotContent .. "]\n"
 

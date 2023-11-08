@@ -4,61 +4,65 @@ require("graph_functions")
 require("pathfinding_functions")
 require("print_functions")
 
+-- Obtem os valores dos args ou utiliza valorez padrao
 
 -- Tamanho da matriz de adjacencia que representa o tabuleiro
--- Numero de linhas (arg1)
+-- Numero de rows (arg1)
 rows = arg[1] or 8
--- Numero de colunas (arg2)
+-- Numero de cols (arg2)
 cols = arg[2] or 8
 
--- Coordenadas de início e final, representadas como pares de valores (linha, coluna)
+-- Coordenadas de início e final, representadas como pares de valores (row, col)
 -- coordenada x do inicio (arg3)
-linha_inicio = arg[3] or 1
+row_start = arg[3] or 1
 -- coordenada y do inicio (arg4)
-coluna_inicio = arg[4] or 1
-inicio = {linha = linha_inicio, coluna = coluna_inicio}  -- Por exemplo, início na coordenada (1, 1)
+col_start = arg[4] or 1
+start = {row = row_start, col = col_start}  -- Por exemplo, início na coordenada (1, 1)
 -- coordenada x do final (arg5)
-linha_final = arg[5] or rows
+row_goal = arg[5] or rows
 -- coordenada y do final (arg6)
-coluna_final = arg[6] or cols
-final = {linha = linha_final, coluna = coluna_final}  -- Por exemplo, final na coordenada (8, 8)
+col_goal = arg[6] or cols
+goal = {row = row_goal, col = col_goal}  -- Por exemplo, goal na coordenada (8, 8)
 
-
-
-print("Matriz de adjacência: " .. rows .. "x" .. cols)
-print("inicio: x=" .. inicio.linha .. ",y=" .. inicio.coluna)
-print("final: x=" .. final.linha .. ",y=" .. final.coluna)
-
--- ------------------------------------
+-- variaveis do programa
 -- Valor dos obstaculos
 obstacle = 0
 -- Um multiplicador utilizado para indexar células em uma grade ou matriz
 -- Calcular um índice exclusivo para cada célula em uma grade ou matriz bidimensional.
 indexMultiplier = 10 ^ math.ceil(math.log10(rows * cols))
 
--- -------------------------
+-- criar mapa
 
--- repita a criacao do mapa caso os caminhos nao sejam possiveis
+-- repita a criacao do map caso os caminhos nao sejam possiveis
 repeat
-  -- Gere um mapa aleatório
-  mapa = generateRandomMap(rows, cols, inicio, final)
+  -- Gere um map aleatório
+  map = generateRandomMap(rows, cols, start, goal)
   -- Gera grafo ponderado
-  grafo = createWeightedGraph(mapa)
+  grafo = createWeightedGraph(map)
   -- Calcula o caminho mais curto com dijkstra
-  path_dijkstra = dijkstra(grafo, inicio, final)
+  path_dijkstra = dijkstra(grafo, start, goal)
   -- Calcula o caminho com busca em profundidade (Depth-First Search - DFS) 
-  path_dfs = depthFirstSearch(grafo, inicio, final)
+  path_dfs = depthFirstSearch(grafo, start, goal)
 until path_dijkstra and path_dfs
 
+-- Saidas no terminal
+print("Matriz de adjacencia")
+print("tamanho: " .. rows .. "x" .. cols)
+print("inicio: x=" .. start.row .. ",y=" .. start.col)
+print("final: x=" .. goal.row .. ",y=" .. goal.col)
+print("\n")
 print("Mapa")
-printMap(mapa)
+printMap(map)
+print("\n")
 print("Grafo ponderado")
 printGraphAsLuaTable(grafo)
-print("dijkstra")
+print("\n")
+print("Caminho com Dijkstra")
 printPathAsLuaTable(path_dijkstra)
-print("dfs" )
+print("\n")
+print("Caminho com Depth-First Search" )
 printPathAsLuaTable(path_dfs)
-print("salvando arquivo em formato dot do grafo dijkstra")
+print("\n")
+print("Exportando grafos" )
 saveGraphAsDotWithSubgraph(grafo, path_dijkstra, "dijkstra")
-print("salvando arquivo em formato dot do grafo dfs")
 saveGraphAsDotWithSubgraph(grafo, path_dfs, "dfs")
