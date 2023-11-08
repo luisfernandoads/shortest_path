@@ -71,9 +71,14 @@ function generateSVGFromDotFile(dotFileName)
     local command = string.format("dot -Tsvg %s > %s", dotFileName, outputFileName)
     local exitCode = os.execute(command)
 
-    if exitCode == 0 then
-        print("Comando executado com sucesso.")
+    if exitCode then
+        print("Exportado para svg como " .. outputFileName)
     else
-        print("Erro ao executar o comando.")
+        os.remove(outputFileName)
+        print("\n")
+        print("Erro ao exportar para svg.")
+        print("verifique se tem o graphviz instalado.")
+        print("https://graphviz.org/download/")
+        print("\n")
     end
 end
