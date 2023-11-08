@@ -1,8 +1,10 @@
 -- Importar modulos
+require("utils_functions")
 require("map_functions")
 require("graph_functions")
 require("pathfinding_functions")
 require("print_functions")
+require("export_functions")
 
 -- Obtem os valores dos args ou utiliza valorez padrao
 
@@ -64,5 +66,5 @@ print("Caminho com Depth-First Search" )
 printPathAsLuaTable(path_dfs)
 print("\n")
 print("Exportando grafos" )
-saveGraphAsDotWithSubgraph(grafo, path_dijkstra, "dijkstra")
-saveGraphAsDotWithSubgraph(grafo, path_dfs, "dfs")
+exportGraphAsDotWithSubgraph(grafo, path_dijkstra, "dijkstra")
+exportGraphAsDotWithSubgraph(grafo, path_dfs, "dfs")
