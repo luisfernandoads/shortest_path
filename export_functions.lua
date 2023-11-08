@@ -63,4 +63,17 @@ function exportGraphAsDotWithSubgraph(graph, path, path_algorithm)
     else
         print("Erro ao abrir o arquivo para escrita.")
     end
+    return filename
+end
+
+function generateSVGFromDotFile(dotFileName)
+    local outputFileName = string.gsub(dotFileName, "%.dot$", ".svg")
+    local command = string.format("dot -Tsvg %s > %s", dotFileName, outputFileName)
+    local exitCode = os.execute(command)
+
+    if exitCode == 0 then
+        print("Comando executado com sucesso.")
+    else
+        print("Erro ao executar o comando.")
+    end
 end
