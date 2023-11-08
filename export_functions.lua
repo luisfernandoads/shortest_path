@@ -67,19 +67,28 @@ function exportGraphAsDotWithSubgraph(graph, path, path_algorithm)
 end
 
 function generateSVGFromDotFile(dotFileName)
+    -- Gere o nome do arquivo de saída substituindo ".dot" por ".svg"
     local outputFileName = string.gsub(dotFileName, "%.dot$", ".svg")
+    
+    -- Crie o comando para gerar o arquivo SVG a partir do arquivo DOT
     local command = string.format("dot -Tsvg %s > %s", dotFileName, outputFileName)
+    
+    -- Execute o comando e obtenha o código de saída
     local exitCode = os.execute(command)
 
+    -- Verifique se a exportação foi bem-sucedida
     if exitCode then
         print("Exportado para svg como " .. outputFileName)
     else
+        -- Se ocorrer um erro na exportação, remova o arquivo de saída (SVG)
         os.remove(outputFileName)
+        
+        -- Imprima mensagens de erro e instruções
         print("\n")
         print("Erro ao exportar para svg.")
-        print("verifique se tem o graphviz instalado.")
-        print("ao instalar adicione ele ao path do sistema.")
-        print("https://graphviz.org/download/")
+        print("Verifique se o Graphviz esta instalado.")
+        print("Ao instalar, adicione o Graphviz ao PATH do sistema.")
+        print("Voce pode baixa-lo em: https://graphviz.org/download/")
         print("\n")
     end
 end

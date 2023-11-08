@@ -1,7 +1,8 @@
+-- Função para gerar um mapa aleatório
 function generateRandomMap(rows, cols, start, goal)
-    math.randomseed(os.time()) -- Inicialize a semente de números aleatórios com o tempo atual
+    math.randomseed(os.time()) -- Inicializa a semente de números aleatórios com o tempo atual
 
-    local map = {}
+    local map = {}  -- Inicializa o mapa vazio
 
     -- Função para verificar se um valor é válido
     local function isValid(value, r, c)
@@ -17,7 +18,7 @@ function generateRandomMap(rows, cols, start, goal)
 
         -- Verifique se o valor não é um obstáculo para o caminho
         if not map[r] then
-            map[r] = {}  -- Inicialize a row se necessário
+            map[r] = {}  -- Inicialize a linha se necessário
         end
 
         if r == start.row then
@@ -34,7 +35,7 @@ function generateRandomMap(rows, cols, start, goal)
             local step = r < start.row and 1 or -1
             for row = start.row, r, step do
                 if not map[row] then
-                    map[row] = {}  -- Inicialize a row se necessário
+                    map[row] = {}  -- Inicialize a linha se necessário
                 end
                 if not map[row][c] then
                     map[row][c] = 1  -- Valor padrão, se não estiver inicializado
@@ -48,7 +49,7 @@ function generateRandomMap(rows, cols, start, goal)
         return true
     end
 
-    -- Inicialize o map com valores aleatórios
+    -- Inicialize o mapa com valores aleatórios
     for r = 1, rows do
         map[r] = {}
         for c = 1, cols do
@@ -65,5 +66,5 @@ function generateRandomMap(rows, cols, start, goal)
         end
     end
 
-    return map
+    return map  -- Retorna o mapa gerado aleatoriamente
 end
