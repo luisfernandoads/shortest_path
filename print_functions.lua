@@ -39,6 +39,8 @@ function printPathAsLuaTable(path)
     local luaTable = "{"
 
     for i, node in ipairs(path) do
+        -- Converta o valor do nó para um número inteiro usando a função math.floor
+        node = math.floor(node)
         luaTable = luaTable .. node
         if i < #path then
             luaTable = luaTable .. ", "
@@ -90,23 +92,33 @@ end
 function saveGraphAsDotWithSubgraph(graph, path, path_algorithm)
     -- Obtém a data e hora local
     local currentDate = os.date("%Y-%m-%d")
-    local currentTime = os.date("%H-%M-%S-")
+    local currentTime = os.date("%H-%M-%S")
 
     -- Gera o nome do arquivo com a data e hora local
     local filename = "graph_".. path_algorithm .. "_" .. currentDate .. "_" .. currentTime .. ".dot"
 
     -- Inicializa o conteúdo do arquivo Dot com o cabeçalho
-    local dotContent = "digraph G {\n graph [layout = neato]\n"
+    local dotContent = "digraph G {\n"
+    -- metadados do grafo
+    dotContent = dotContent .. "graph [\n"
+    dotContent = dotContent .. "layout = neato\n"
+    dotContent = dotContent .. "label = \"" .. path_algorithm .. "\"\n"
+    dotContent = dotContent .. "fontsize= \"40pt\"\n"
+    dotContent = dotContent .. "]\n"
 
     -- Percorre todos os nós e arestas no grafo
     -- pairsByKeys para ordenar antes era pairs
     for node, edges in pairsByKeys(graph) do
         -- Adiciona o nó ao conteúdo Dot
+        -- Converta o valor do nó para um número inteiro usando a função math.floor
+        node = math.floor(node)
         dotContent = dotContent .. "  " .. node .. ";\n"
 
         -- Percorre as arestas deste nó e adiciona ao conteúdo Dot
         -- pairsByKeys para ordenar antes era pairs
         for neighbor, weight in pairsByKeys(edges) do
+            -- Converta o valor do nó para um número inteiro usando a função math.floor
+            node = math.floor(node)
             dotContent = dotContent .. "  " .. node .. " -> " .. neighbor .. " [label=\"" .. weight .. "\"];\n"
         end
     end
@@ -116,11 +128,14 @@ function saveGraphAsDotWithSubgraph(graph, path, path_algorithm)
     dotContent = dotContent .. "    rank = same;\n"
 
     for _, node in ipairs(path) do
+        -- Converta o valor do nó para um número inteiro usando a função math.floor
+        node = math.floor(node)
         dotContent = dotContent .. "    " .. node .. " [style=filled, fillcolor=yellow];\n"
     end
 
     for i = 1, #path - 1 do
-        dotContent = dotContent .. "    " .. path[i] .. " -> " .. path[i + 1] .. " [color=red];\n"
+        -- Converta o valor do nó path[] para um número inteiro usando a função math.floor
+        dotContent = dotContent .. "    " .. math.floor(path[i]) .. " -> " .. math.floor(path[i + 1]) .. " [color=red];\n"
     end
 
     dotContent = dotContent .. "  }\n"
