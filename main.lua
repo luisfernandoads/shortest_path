@@ -10,23 +10,23 @@ require("export_functions")
 
 -- Tamanho da matriz de adjacência que representa o tabuleiro
 -- Número de linhas (arg1)
-rows = arg[1] or 8
+local rows = arg[1] or 8
 -- Número de colunas (arg2)
-cols = arg[2] or 8
+local cols = arg[2] or 8
 
 -- Coordenadas de início e final, representadas como pares de valores (linha, coluna)
 -- Coordenada x de início (arg3)
-row_start = arg[3] or 1
+local row_start = arg[3] or 1
 -- Coordenada y de início (arg4)
-col_start = arg[4] or 1
-start = {row = row_start, col = col_start}  -- Por exemplo, início na coordenada (1, 1)
+local col_start = arg[4] or 1
+local start = {row = row_start, col = col_start}  -- Por exemplo, início na coordenada (1, 1)
 -- Coordenada x do final (arg5)
-row_goal = arg[5] or rows
+local row_goal = arg[5] or rows
 -- Coordenada y do final (arg6)
-col_goal = arg[6] or cols
-goal = {row = row_goal, col = col_goal}  -- Por exemplo, meta na coordenada (8, 8)
+local col_goal = arg[6] or cols
+local goal = {row = row_goal, col = col_goal}  -- Por exemplo, meta na coordenada (8, 8)
 -- Configurar exportação
-export = arg[7] or true
+local export = arg[7] or true
 
 -- Variáveis do programa
 -- Valor dos obstáculos
@@ -70,8 +70,8 @@ printPathAsLuaTable(path_dfs)
 if export ~= "false" then
   print("\n")
   print("Exportando grafos")
-  file_dijkstra = exportGraphAsDotWithSubgraph(grafo, path_dijkstra, "dijkstra")
-  file_dfs = exportGraphAsDotWithSubgraph(grafo, path_dfs, "dfs")
+  local file_dijkstra = exportGraphAsDotWithSubgraph(grafo, path_dijkstra, "dijkstra")
+  local file_dfs = exportGraphAsDotWithSubgraph(grafo, path_dfs, "dfs")
   print("\n")
   print("Convertendo dot para svg com Graphviz")
   generateSVGFromDotFile(file_dijkstra)
