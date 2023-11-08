@@ -25,6 +25,8 @@ row_goal = arg[5] or rows
 -- coordenada y do final (arg6)
 col_goal = arg[6] or cols
 goal = {row = row_goal, col = col_goal}  -- Por exemplo, goal na coordenada (8, 8)
+-- configurar export
+export = arg[7] or true
 
 -- variaveis do programa
 -- Valor dos obstaculos
@@ -64,11 +66,14 @@ printPathAsLuaTable(path_dijkstra)
 print("\n")
 print("Caminho com Depth-First Search")
 printPathAsLuaTable(path_dfs)
-print("\n")
-print("Exportando grafos")
-file_dijkstra = exportGraphAsDotWithSubgraph(grafo, path_dijkstra, "dijkstra")
-file_dfs = exportGraphAsDotWithSubgraph(grafo, path_dfs, "dfs")
-print("\n")
-print("Convertendo dot para svg com Graphviz")
-generateSVGFromDotFile(file_dijkstra)
-generateSVGFromDotFile(file_dfs)
+-- nao exporta caso o parametro export seja passado
+if export ~= "false" then
+  print("\n")
+  print("Exportando grafos")
+  file_dijkstra = exportGraphAsDotWithSubgraph(grafo, path_dijkstra, "dijkstra")
+  file_dfs = exportGraphAsDotWithSubgraph(grafo, path_dfs, "dfs")
+  print("\n")
+  print("Convertendo dot para svg com Graphviz")
+  generateSVGFromDotFile(file_dijkstra)
+  generateSVGFromDotFile(file_dfs)
+end

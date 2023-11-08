@@ -78,6 +78,7 @@ function generateSVGFromDotFile(dotFileName)
         print("\n")
         print("Erro ao exportar para svg.")
         print("verifique se tem o graphviz instalado.")
+        print("ao instalar adicione ele ao path do sistema.")
         print("https://graphviz.org/download/")
         print("\n")
     end
