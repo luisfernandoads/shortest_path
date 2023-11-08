@@ -1,3 +1,4 @@
+-- Importar modulos
 require("map_functions")
 require("graph_functions")
 require("pathfinding_functions")
@@ -7,14 +8,18 @@ require("print_functions")
 -- Tamanho da matriz de adjacencia que representa o tabuleiro
 -- Numero de linhas (arg1)
 rows = arg[1] or 8
--- Numero de colunas (arg1)
+-- Numero de colunas (arg2)
 cols = arg[2] or 8
 
 -- Coordenadas de início e final, representadas como pares de valores (linha, coluna)
+-- coordenada x do inicio (arg3)
 linha_inicio = arg[3] or 1
+-- coordenada y do inicio (arg4)
 coluna_inicio = arg[4] or 1
 inicio = {linha = linha_inicio, coluna = coluna_inicio}  -- Por exemplo, início na coordenada (1, 1)
+-- coordenada x do final (arg5)
 linha_final = arg[5] or rows
+-- coordenada y do final (arg6)
 coluna_final = arg[6] or cols
 final = {linha = linha_final, coluna = coluna_final}  -- Por exemplo, final na coordenada (8, 8)
 
