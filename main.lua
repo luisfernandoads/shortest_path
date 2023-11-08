@@ -25,7 +25,7 @@ local row_goal = arg[5] or rows
 -- Coordenada y do final (arg6)
 local col_goal = arg[6] or cols
 local goal = {row = row_goal, col = col_goal}  -- Por exemplo, meta na coordenada (8, 8)
--- Configurar exportação
+-- Configurar exportação (arg7)
 local export = arg[7] or true
 
 -- Variáveis do programa
