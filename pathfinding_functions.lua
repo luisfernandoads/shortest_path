@@ -147,17 +147,16 @@ function aStar(graph, start, goal)
     return path  -- Retorna o caminho encontrado
 end
 
+-- Função que calcula a heurística entre um nó e o objetivo
 function calculateHeuristic(node, goal)
-    -- Implemente aqui a sua função heurística compatível com o grafo ponderado
-    -- A heurística deve estimar o custo restante do nó atual até o nó de destino
-    -- Ela pode ser baseada em distâncias, geometria do grafo ou outras informações relevantes
-    -- Para este exemplo, suponha uma função heurística simples que retorna uma estimativa baseada na distância euclidiana entre os nós
-    local nodeRow = math.floor(node / indexMultiplier)
-    local nodeCol = node % indexMultiplier
-    local goalRow = goal.row
-    local goalCol = goal.col
+    -- Obtém a linha e a coluna do nó
+    local nodeRow = math.floor(node / indexMultiplier)  -- Obtém a linha do nó na matriz
+    local nodeCol = node % indexMultiplier  -- Obtém a coluna do nó na matriz
+    local goalRow = goal.row  -- Obtém a linha do objetivo
+    local goalCol = goal.col  -- Obtém a coluna do objetivo
 
-    local heuristicValue = math.sqrt((goalRow - nodeRow)^2 + (goalCol - nodeCol)^2)  -- Distância euclidiana entre os nós
+    -- Calcula a distância euclidiana entre os nós (heurística)
+    local heuristicValue = math.sqrt((goalRow - nodeRow)^2 + (goalCol - nodeCol)^2)
 
-    return heuristicValue
+    return heuristicValue  -- Retorna o valor heurístico calculado
 end

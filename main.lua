@@ -45,7 +45,7 @@ repeat
   grafo = createWeightedGraph(map)
   -- Calcula o caminho mais curto com Dijkstra
   path_dijkstra = dijkstra(grafo, start, goal)
-  -- Calcula o caminho com busca em profundidade (Depth-First Search - aStar)
+  -- Calcula o caminho mais curto com aStar (A*)
   path_aStar = aStar(grafo, start, goal)
 until path_dijkstra and path_aStar
 
@@ -63,9 +63,15 @@ printGraphAsLuaTable(grafo)
 print("\n")
 print("Caminho com Dijkstra")
 printPathAsLuaTable(path_dijkstra)
+weight_dijkstra = calculatePathWeight(grafo, path_dijkstra)
+print("Arestas do caminho com Dijkstra " .. #path_dijkstra)
+print("Peso do caminho com Dijkstra " .. weight_dijkstra)
 print("\n")
-print("Caminho com Depth-First Search")
+print("Caminho com aStar (A*)")
 printPathAsLuaTable(path_aStar)
+weight_aStar = calculatePathWeight(grafo, path_aStar)
+print("Arestas do caminho com aStar (A*) " .. #path_aStar)
+print("Peso do caminho com aStar (A*) " .. weight_aStar)
 -- Não exporta caso o parâmetro export seja "false"
 if export ~= "false" then
   print("\n")

@@ -56,18 +56,18 @@ end
 function calculatePathWeight(graph, path)
     local totalWeight = 0  -- Inicializa o peso total do caminho como zero
 
-    -- Itera sobre cada nó no caminho, exceto o último nó
+    -- Itera sobre os nós do caminho, exceto o último nó, para calcular o peso total do caminho
     for i = 1, #path - 1 do
-        local currentNode = path[i]         -- Obtém o nó atual no caminho
-        local nextNode = path[i + 1]        -- Obtém o próximo nó no caminho
+        local currentNode = path[i]      -- Obtém o nó atual no índice 'i' do caminho
+        local nextNode = path[i + 1]    -- Obtém o próximo nó no índice 'i + 1' do caminho
 
-        -- Verifica se existe uma aresta entre o nó atual e o próximo nó no grafo
+        -- Verifica se há uma aresta entre o nó atual e o próximo nó no caminho
         if graph[currentNode] and graph[currentNode][nextNode] then
-            totalWeight = totalWeight + graph[currentNode][nextNode]  -- Adiciona o peso da aresta ao peso total do caminho
+            totalWeight = totalWeight + graph[currentNode][nextNode]  -- Adiciona o peso da aresta ao peso total
         else
-            return nil  -- Se não houver uma aresta válida, retorna nil (indicando caminho inválido)
+            return nil  -- Se não houver uma aresta válida, retorna nil (caminho inválido)
         end
     end
 
-    return totalWeight  -- Retorna o peso total do caminho encontrado
+    return totalWeight  -- Retorna o peso total do caminho
 end
