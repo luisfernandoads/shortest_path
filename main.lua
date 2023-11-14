@@ -45,9 +45,9 @@ repeat
   grafo = createWeightedGraph(map)
   -- Calcula o caminho mais curto com Dijkstra
   path_dijkstra = dijkstra(grafo, start, goal)
-  -- Calcula o caminho com busca em profundidade (Depth-First Search - DFS)
-  path_dfs = depthFirstSearch(grafo, start, goal)
-until path_dijkstra and path_dfs
+  -- Calcula o caminho com busca em profundidade (Depth-First Search - aStar)
+  path_aStar = aStar(grafo, start, goal)
+until path_dijkstra and path_aStar
 
 -- Saídas no terminal
 print("Matriz de adjacencia")
@@ -65,15 +65,15 @@ print("Caminho com Dijkstra")
 printPathAsLuaTable(path_dijkstra)
 print("\n")
 print("Caminho com Depth-First Search")
-printPathAsLuaTable(path_dfs)
+printPathAsLuaTable(path_aStar)
 -- Não exporta caso o parâmetro export seja "false"
 if export ~= "false" then
   print("\n")
   print("Exportando grafos")
   local file_dijkstra = exportGraphAsDotWithSubgraph(grafo, path_dijkstra, "dijkstra")
-  local file_dfs = exportGraphAsDotWithSubgraph(grafo, path_dfs, "dfs")
+  local file_aStar = exportGraphAsDotWithSubgraph(grafo, path_aStar, "aStar")
   print("\n")
   print("Convertendo dot para svg com Graphviz")
   generateSVGFromDotFile(file_dijkstra)
-  generateSVGFromDotFile(file_dfs)
+  generateSVGFromDotFile(file_aStar)
 end
