@@ -51,3 +51,22 @@ function printPathAsLuaTable(path)
 
     print(luaTable)
 end
+
+function calculatePathWeight(graph, path)
+    local totalWeight = 0  -- Inicializa o peso total do caminho como zero
+
+    for i = 1, #path - 1 do
+        local currentNode = path[i]
+        local nextNode = path[i + 1]
+
+        -- Verifica se há uma aresta entre o nó atual e o próximo nó no caminho
+        if graph[currentNode] and graph[currentNode][nextNode] then
+            totalWeight = totalWeight + graph[currentNode][nextNode]  -- Adiciona o peso da aresta ao peso total
+        else
+            return nil  -- Se não houver uma aresta válida, retorna nil (caminho inválido)
+        end
+    end
+
+    return totalWeight  -- Retorna o peso total do caminho
+end
+
