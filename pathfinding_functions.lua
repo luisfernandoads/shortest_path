@@ -1,5 +1,5 @@
 -- Função para calcular o caminho mais curto com o algoritmo de Dijkstra
-function dijkstra(graph, start, goal)
+function pathDijkstra(graph, start, goal)
     local visited = {}  -- Tabela para rastrear nós visitados
     local distance = {}  -- Tabela para armazenar distâncias
     local previous = {}  -- Tabela para rastrear predecessores
@@ -89,7 +89,7 @@ function depthFirstSearch(graph, start, goal)
     end
 end
 
-function aStar(graph, start, goal)
+function pathAStar(graph, start, goal)
     local visited = {}    -- Tabela para rastrear nós visitados
     local distance = {}   -- Tabela para armazenar distâncias
     local previous = {}   -- Tabela para rastrear predecessores

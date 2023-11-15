@@ -25,8 +25,8 @@ local row_goal = arg[5] or rows
 -- Coordenada y do final (arg6)
 local col_goal = arg[6] or cols
 local goal = {row = row_goal, col = col_goal}  -- Por exemplo, meta na coordenada (8, 8)
--- Configurar exportação (arg7)
-local export = arg[7] or true
+-- Configurar o modo silencioso (arg7)
+local silent = arg[7] or false
 
 -- Variáveis do programa
 -- Valor dos obstáculos
@@ -34,6 +34,12 @@ obstacle = 0
 -- Um multiplicador usado para indexar células em uma grade ou matriz
 -- Calcula um índice exclusivo para cada célula em uma grade ou matriz bidimensional.
 indexMultiplier = 10 ^ math.ceil(math.log10(rows * cols))
+
+-- Tabelas de cada algoritmo
+dijkstra = {}
+dijkstra.name = "dijkstra"
+aStar = {}
+aStar.name = "aStar"
 
 -- Criar mapa
 
@@ -44,15 +50,21 @@ repeat
   -- Gera um grafo ponderado
   grafo = createWeightedGraph(map)
   -- Calcula o caminho mais curto com Dijkstra e seu tempo de execução
-  time_dijkstra = measureExecutionTime(function()
-    path_dijkstra = dijkstra(grafo, start, goal)  -- Chamada à função dijkstra
+  dijkstra.time = measureExecutionTime(function()
+    dijkstra.path = pathDijkstra(grafo, start, goal)  -- Chamada à função dijkstra
   end)
+  -- Quantidade de arestas no caminho com Dijkstra
+  dijkstra.edges = #dijkstra.path
   -- Calcula o caminho mais curto com aStar (A*) e seu tempo de execução
-  time_aStar = measureExecutionTime(function()
-    path_aStar = aStar(grafo, start, goal)  -- Chamada à função aStar
+  aStar.time = measureExecutionTime(function()
+    aStar.path = pathAStar(grafo, start, goal)  -- Chamada à função aStar
   end)
-until #path_dijkstra > 1 and #path_aStar > 1
+  -- Quantidade de arestas no caminho com aStar (A*)
+  aStar.edges = #aStar.path
+until dijkstra.edges > 1 and aStar.edges > 1
 
+-- Modo silencioso, executa saidas somente se silent for false
+if not silent then
 -- Saídas no terminal
 print("Matriz de adjacencia")
 print("Tamanho: " .. rows .. "x" .. cols)
@@ -66,26 +78,24 @@ print("Grafo ponderado")
 printGraphAsLuaTable(grafo)
 print("\n")
 print("Caminho com Dijkstra")
-printPathAsLuaTable(path_dijkstra)
-weight_dijkstra = calculatePathWeight(grafo, path_dijkstra)
-print("Tempo com Dijkstra " .. time_dijkstra)
-print("Arestas do caminho com Dijkstra " .. #path_dijkstra)
-print("Peso do caminho com Dijkstra " .. weight_dijkstra)
+printPathAsLuaTable(dijkstra.path)
+dijkstra.weight = calculatePathWeight(grafo, dijkstra.path)
+print("Tempo com Dijkstra " .. dijkstra.time)
+print("Arestas do caminho com Dijkstra " .. dijkstra.edges)
+print("Peso do caminho com Dijkstra " .. dijkstra.weight)
 print("\n")
 print("Caminho com aStar (A*)")
-printPathAsLuaTable(path_aStar)
-weight_aStar = calculatePathWeight(grafo, path_aStar)
-print("Tempo com aStar (A*) " .. time_aStar)
-print("Arestas do caminho com aStar (A*) " .. #path_aStar)
-print("Peso do caminho com aStar (A*) " .. weight_aStar)
--- Não exporta caso o parâmetro export seja "false"
-if export ~= "false" then
-  print("\n")
-  print("Exportando grafos")
-  local file_dijkstra = exportGraphAsDotWithSubgraph(grafo, path_dijkstra, "dijkstra")
-  local file_aStar = exportGraphAsDotWithSubgraph(grafo, path_aStar, "aStar")
-  print("\n")
-  print("Convertendo dot para svg com Graphviz")
-  generateSVGFromDotFile(file_dijkstra)
-  generateSVGFromDotFile(file_aStar)
+printPathAsLuaTable(aStar.path)
+aStar.weight = calculatePathWeight(grafo, aStar.path)
+print("Tempo com aStar (A*) " .. aStar.time)
+print("Arestas do caminho com aStar (A*) " .. aStar.edges)
+print("Peso do caminho com aStar (A*) " .. aStar.weight)
+print("\n")
+print("Exportando grafos")
+dijkstra.file = exportGraphAsDotWithSubgraph(grafo, dijkstra.path, dijkstra.name)
+aStar.file = exportGraphAsDotWithSubgraph(grafo, aStar.path, aStar.name)
+print("\n")
+print("Convertendo dot para svg com Graphviz")
+generateSVGFromDotFile(dijkstra.file)
+generateSVGFromDotFile(aStar.file)
 end
