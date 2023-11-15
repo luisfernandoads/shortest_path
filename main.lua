@@ -43,11 +43,15 @@ repeat
   map = generateRandomMap(rows, cols, start, goal)
   -- Gera um grafo ponderado
   grafo = createWeightedGraph(map)
-  -- Calcula o caminho mais curto com Dijkstra
-  path_dijkstra = dijkstra(grafo, start, goal)
-  -- Calcula o caminho mais curto com aStar (A*)
-  path_aStar = aStar(grafo, start, goal)
-until path_dijkstra and path_aStar
+  -- Calcula o caminho mais curto com Dijkstra e seu tempo de execução
+  time_dijkstra = measureExecutionTime(function()
+    path_dijkstra = dijkstra(grafo, start, goal)  -- Chamada à função dijkstra
+  end)
+  -- Calcula o caminho mais curto com aStar (A*) e seu tempo de execução
+  time_aStar = measureExecutionTime(function()
+    path_aStar = aStar(grafo, start, goal)  -- Chamada à função aStar
+  end)
+until #path_dijkstra > 1 and #path_aStar > 1
 
 -- Saídas no terminal
 print("Matriz de adjacencia")
@@ -64,12 +68,14 @@ print("\n")
 print("Caminho com Dijkstra")
 printPathAsLuaTable(path_dijkstra)
 weight_dijkstra = calculatePathWeight(grafo, path_dijkstra)
+print("Tempo com Dijkstra " .. time_dijkstra)
 print("Arestas do caminho com Dijkstra " .. #path_dijkstra)
 print("Peso do caminho com Dijkstra " .. weight_dijkstra)
 print("\n")
 print("Caminho com aStar (A*)")
 printPathAsLuaTable(path_aStar)
 weight_aStar = calculatePathWeight(grafo, path_aStar)
+print("Tempo com aStar (A*) " .. time_aStar)
 print("Arestas do caminho com aStar (A*) " .. #path_aStar)
 print("Peso do caminho com aStar (A*) " .. weight_aStar)
 -- Não exporta caso o parâmetro export seja "false"

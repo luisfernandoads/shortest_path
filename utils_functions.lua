@@ -16,3 +16,10 @@ function pairsByKeys (t, f)
     return iter
   end
   
+-- Função para calcular o tempo de execução de uma determinada função
+function measureExecutionTime(func)
+  local startTime = os.clock()  -- Marca o tempo de início
+  func()  -- Executa a função fornecida como argumento
+  local endTime = os.clock()  -- Marca o tempo de término
+  return endTime - startTime  -- Retorna a diferença entre o tempo de término e o tempo de início
+end
