@@ -1,11 +1,11 @@
 --  Exporta a representação em formato Dot
-function exportGraphAsDotWithSubgraph(graph, path, path_algorithm)
+function exportGraphAsDotWithSubgraph(graph, path, path_algorithm, exec_num)
     -- Obtém a data e hora local
     local currentDate = os.date("%Y-%m-%d")
     local currentTime = os.date("%H-%M-%S")
 
     -- Gera o nome do arquivo com a data e hora local
-    local filename = "graph_".. path_algorithm .. "_" .. currentDate .. "_" .. currentTime .. ".dot"
+    local filename = exec_num .. "_graph_".. path_algorithm .. "_" .. currentDate .. "_" .. currentTime .. ".dot"
 
     -- Inicializa o conteúdo do arquivo Dot com o cabeçalho
     local dotContent = "digraph G {\n"
