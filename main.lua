@@ -79,6 +79,8 @@ while count <= executions do
     end)
     -- Quantidade de arestas no caminho com Dijkstra
     dijkstra.edges = #dijkstra.path
+    -- Tamanho do caminho com Dijkstra
+    dijkstra.weight = calculatePathWeight(grafo, dijkstra.path)
 
     -- Calcula o caminho mais curto com aStar (A*) e seu tempo de execução
     -- Com heuristica de distancia distância Euclidiana
@@ -88,7 +90,9 @@ while count <= executions do
     -- Quantidade de arestas no caminho com aStar (A*)
     -- Com heuristica de distancia distância Euclidiana
     aStarEuclidean.edges = #aStarEuclidean.path
-
+    -- Tamanho do caminho com Dijkstra
+    -- Com heuristica de distancia distância Euclidiana
+    aStarEuclidean.weight = calculatePathWeight(grafo, aStarEuclidean.path)
     -- Calcula o caminho mais curto com aStar (A*) e seu tempo de execução
     -- Com heuristica de distancia distância de Manhattan
     aStarManhattan.time = measureExecutionTime(function()
@@ -97,6 +101,10 @@ while count <= executions do
     -- Quantidade de arestas no caminho com aStar (A*)
     -- Com heuristica de distancia distância de Manhattan
     aStarManhattan.edges = #aStarManhattan.path
+    -- Tamanho do caminho com Dijkstra
+    -- Com heuristica de distancia distância de Manhattan
+    aStarManhattan.weight = calculatePathWeight(grafo, aStarManhattan.path)
+    
   until dijkstra.edges > 1 and aStarEuclidean.edges > 1 and aStarManhattan.edges > 1
 
   -- Adiciona o resultado dos algoritmos a tabela para armazenar os dados das execuções
@@ -123,7 +131,6 @@ while count <= executions do
   -- Dijkstra
   print("Caminho com Dijkstra")
   printPathAsLuaTable(dijkstra.path)
-  dijkstra.weight = calculatePathWeight(grafo, dijkstra.path)
   print("Tempo com Dijkstra " .. dijkstra.time)
   print("Arestas do caminho com Dijkstra " .. dijkstra.edges)
   print("Peso do caminho com Dijkstra " .. dijkstra.weight)
@@ -132,7 +139,6 @@ while count <= executions do
   print("aStarEuclidean (A*) com heuristica de distancia distância Euclidiana")
   print("Caminho com aStarEuclidean (A*)")
   printPathAsLuaTable(aStarEuclidean.path)
-  aStarEuclidean.weight = calculatePathWeight(grafo, aStarEuclidean.path)
   print("Tempo com aStarEuclidean (A*) " .. aStarEuclidean.time)
   print("Arestas do caminho com aStarEuclidean (A*) " .. aStarEuclidean.edges)
   print("Peso do caminho com aStarEuclidean (A*) " .. aStarEuclidean.weight)
@@ -141,7 +147,6 @@ while count <= executions do
   print("aStarEuclidean (A*) com heuristica de distancia distância de Manhattan")
   print("Caminho com aStarManhattan (A*)")
   printPathAsLuaTable(aStarManhattan.path)
-  aStarManhattan.weight = calculatePathWeight(grafo, aStarManhattan.path)
   print("Tempo com aStarManhattan (A*) " .. aStarManhattan.time)
   print("Arestas do caminho com aStarManhattan (A*) " .. aStarManhattan.edges)
   print("Peso do caminho com aStarManhattan (A*) " .. aStarManhattan.weight)
