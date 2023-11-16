@@ -52,8 +52,12 @@ while count <= executions do
   -- Tabela do algoritmo aStar (A*) com heuristica de distancia distância Euclidiana
   local aStarEuclidean = {}
   aStarEuclidean.name = "astar_euclidean"
-  
-  dijkstra.file = ""-- nome do arquivo vazio no caso do modo silent
+  aStarEuclidean.file = ""-- nome do arquivo vazio no caso do modo silent
+  -- Tabela do algoritmo aStar (A*) com heuristica de distancia distância de Manhattan
+  local aStarManhattan = {}
+  aStarManhattan.name = "astar_Manhattan"
+  aStarManhattan.file = ""-- nome do arquivo vazio no caso do modo silent
+
   -- Cria mapa
   -- Repete a criação do mapa caso os caminhos não sejam possíveis
   repeat
@@ -61,12 +65,14 @@ while count <= executions do
     map = generateRandomMap(rows, cols, start, goal)
     -- Gera um grafo ponderado
     grafo = createWeightedGraph(map)
+
     -- Calcula o caminho mais curto com Dijkstra e seu tempo de execução
     dijkstra.time = measureExecutionTime(function()
       dijkstra.path = pathDijkstra(grafo, start, goal)  -- Chamada à função dijkstra
     end)
     -- Quantidade de arestas no caminho com Dijkstra
     dijkstra.edges = #dijkstra.path
+
     -- Calcula o caminho mais curto com aStar (A*) e seu tempo de execução
     -- Com heuristica de distancia distância Euclidiana
     aStarEuclidean.time = measureExecutionTime(function()
@@ -75,13 +81,23 @@ while count <= executions do
     -- Quantidade de arestas no caminho com aStar (A*)
     -- Com heuristica de distancia distância Euclidiana
     aStarEuclidean.edges = #aStarEuclidean.path
-  until dijkstra.edges > 1 and aStarEuclidean.edges > 1
+
+    -- Calcula o caminho mais curto com aStar (A*) e seu tempo de execução
+    -- Com heuristica de distancia distância de Manhattan
+    aStarManhattan.time = measureExecutionTime(function()
+      aStarManhattan.path = pathAStar(grafo, start, goal, heuristicManhattan)  -- Chamada à função aStar
+    end)
+    -- Quantidade de arestas no caminho com aStar (A*)
+    -- Com heuristica de distancia distância de Manhattan
+    aStarManhattan.edges = #aStarManhattan.path
+  until dijkstra.edges > 1 and aStarEuclidean.edges > 1 and aStarManhattan.edges > 1
 
   -- Tabela para armazenar os dados das execuções
   local executionData = {}
   executionData.execution = count
   executionData.dijkstra = dijkstra
   executionData.aStarEuclidean = aStarEuclidean
+  executionData.aStarManhattan = aStarManhattan
   -- Adicione os dados da execução à tabela de dados de execuções
   table.insert(exportData, executionData)
 
@@ -99,6 +115,7 @@ while count <= executions do
   print("Grafo ponderado")
   printGraphAsLuaTable(grafo)
   print("\n")
+  -- Dijkstra
   print("Caminho com Dijkstra")
   printPathAsLuaTable(dijkstra.path)
   dijkstra.weight = calculatePathWeight(grafo, dijkstra.path)
@@ -106,6 +123,7 @@ while count <= executions do
   print("Arestas do caminho com Dijkstra " .. dijkstra.edges)
   print("Peso do caminho com Dijkstra " .. dijkstra.weight)
   print("\n")
+  -- aStarEuclidean
   print("aStarEuclidean (A*) com heuristica de distancia distância Euclidiana")
   print("Caminho com aStarEuclidean (A*)")
   printPathAsLuaTable(aStarEuclidean.path)
@@ -113,15 +131,27 @@ while count <= executions do
   print("Tempo com aStarEuclidean (A*) " .. aStarEuclidean.time)
   print("Arestas do caminho com aStarEuclidean (A*) " .. aStarEuclidean.edges)
   print("Peso do caminho com aStarEuclidean (A*) " .. aStarEuclidean.weight)
+  -- aStarManhattan
   print("\n")
+  print("aStarEuclidean (A*) com heuristica de distancia distância de Manhattan")
+  print("Caminho com aStarManhattan (A*)")
+  printPathAsLuaTable(aStarManhattan.path)
+  aStarManhattan.weight = calculatePathWeight(grafo, aStarManhattan.path)
+  print("Tempo com aStarManhattan (A*) " .. aStarManhattan.time)
+  print("Arestas do caminho com aStarManhattan (A*) " .. aStarManhattan.edges)
+  print("Peso do caminho com aStarManhattan (A*) " .. aStarManhattan.weight)
+  print("\n")
+  -- Exportando
   print("Exportando grafos")
   -- Passar contador de execuções como parâmetro para nao sobrescrever os arquivos
   dijkstra.file = exportGraphAsDotWithSubgraph(grafo, dijkstra.path, dijkstra.name, count)
   aStarEuclidean.file = exportGraphAsDotWithSubgraph(grafo, aStarEuclidean.path, aStarEuclidean.name, count)
+  aStarManhattan.file = exportGraphAsDotWithSubgraph(grafo, aStarManhattan.path, aStarManhattan.name, count)
   print("\n")
   print("Convertendo dot para svg com Graphviz")
   generateSVGFromDotFile(dijkstra.file)
   generateSVGFromDotFile(aStarEuclidean.file)
+  generateSVGFromDotFile(aStarManhattan.file)
   end
     -- Contador de execuções
     count = count + 1
