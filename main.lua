@@ -42,21 +42,28 @@ local exportData = {}
 indexMultiplier = 10 ^ math.ceil(math.log10(rows * cols))
 
 while count <= executions do
+  -- Tabela para armazenar os dados das execuções
+  local executionData = {}
+  -- Obtém a contagem da execução atual
+  executionData.executionCount = count
+  -- Obtém a data e hora local
+  executionData.currentDate = os.date("%Y-%m-%d")
+  executionData.currentTime = os.date("%H-%M-%S")
   -- Tabelas de cada algoritmo
   -- As tabelas devem estar dentro do loop como variaveis locais
   -- Para registrar os valores corretamente
   -- Tabela do algoritmo de Dijkstra
   local dijkstra = {}
   dijkstra.name = "dijkstra"
-  dijkstra.file = "" -- nome do arquivo vazio no caso do modo silent
+  dijkstra.file = generateFilename(executionData, dijkstra)
   -- Tabela do algoritmo aStar (A*) com heuristica de distancia distância Euclidiana
   local aStarEuclidean = {}
   aStarEuclidean.name = "astar_euclidean"
-  aStarEuclidean.file = ""-- nome do arquivo vazio no caso do modo silent
+  aStarEuclidean.file = generateFilename(executionData, aStarEuclidean)
   -- Tabela do algoritmo aStar (A*) com heuristica de distancia distância de Manhattan
   local aStarManhattan = {}
-  aStarManhattan.name = "astar_Manhattan"
-  aStarManhattan.file = ""-- nome do arquivo vazio no caso do modo silent
+  aStarManhattan.name = "astar_manhattan"
+  aStarManhattan.file = generateFilename(executionData, aStarManhattan)
 
   -- Cria mapa
   -- Repete a criação do mapa caso os caminhos não sejam possíveis
@@ -92,9 +99,7 @@ while count <= executions do
     aStarManhattan.edges = #aStarManhattan.path
   until dijkstra.edges > 1 and aStarEuclidean.edges > 1 and aStarManhattan.edges > 1
 
-  -- Tabela para armazenar os dados das execuções
-  local executionData = {}
-  executionData.execution = count
+  -- Adiciona o resultado dos algoritmos a tabela para armazenar os dados das execuções
   executionData.dijkstra = dijkstra
   executionData.aStarEuclidean = aStarEuclidean
   executionData.aStarManhattan = aStarManhattan
@@ -143,10 +148,9 @@ while count <= executions do
   print("\n")
   -- Exportando
   print("Exportando grafos")
-  -- Passar contador de execuções como parâmetro para nao sobrescrever os arquivos
-  dijkstra.file = exportGraphAsDotWithSubgraph(grafo, dijkstra.path, dijkstra.name, count)
-  aStarEuclidean.file = exportGraphAsDotWithSubgraph(grafo, aStarEuclidean.path, aStarEuclidean.name, count)
-  aStarManhattan.file = exportGraphAsDotWithSubgraph(grafo, aStarManhattan.path, aStarManhattan.name, count)
+  exportGraphAsDotWithSubgraph(grafo, dijkstra.path, dijkstra.name, dijkstra.file)
+  exportGraphAsDotWithSubgraph(grafo, aStarEuclidean.path, aStarEuclidean.name, aStarEuclidean.file)
+  exportGraphAsDotWithSubgraph(grafo, aStarManhattan.path, aStarManhattan.name, aStarManhattan.file)
   print("\n")
   print("Convertendo dot para svg com Graphviz")
   generateSVGFromDotFile(dijkstra.file)

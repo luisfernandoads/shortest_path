@@ -1,11 +1,7 @@
 --  Exporta a representação em formato Dot
-function exportGraphAsDotWithSubgraph(graph, path, path_algorithm, exec_num)
-    -- Obtém a data e hora local
-    local currentDate = os.date("%Y-%m-%d")
-    local currentTime = os.date("%H-%M-%S")
-
-    -- Gera o nome do arquivo com a data e hora local
-    local filename = exec_num .. "_graph_".. path_algorithm .. "_" .. currentDate .. "_" .. currentTime .. ".dot"
+function exportGraphAsDotWithSubgraph(graph, path, path_algorithm, path_filename)
+    -- Gera o nome do arquivo com extenção correta
+    local filename = path_filename .. ".dot"
 
     -- Inicializa o conteúdo do arquivo Dot com o cabeçalho
     local dotContent = "digraph G {\n"
@@ -63,12 +59,12 @@ function exportGraphAsDotWithSubgraph(graph, path, path_algorithm, exec_num)
     else
         print("Erro ao abrir o arquivo para escrita.")
     end
-    return filename
 end
 
-function generateSVGFromDotFile(dotFileName)
-    -- Gere o nome do arquivo de saída substituindo ".dot" por ".svg"
-    local outputFileName = string.gsub(dotFileName, "%.dot$", ".svg")
+function generateSVGFromDotFile(path_algorithm)
+    -- Gera o nome do arquivo com extenção correta
+    local dotFileName = path_algorithm .. ".dot"
+    local outputFileName = path_algorithm .. ".svg"
     
     -- Crie o comando para gerar o arquivo SVG a partir do arquivo DOT
     local command = string.format("dot -Tsvg %s > %s", dotFileName, outputFileName)
@@ -95,7 +91,9 @@ end
 
 function generateCSV(data)
     -- Nome do arquivo CSV
-    local filename = "executions_data.csv"
+    local currentDate = os.date("%Y-%m-%d")
+    local currentTime = os.date("%H-%M-%S")
+    local filename = "execution_data_" .. currentDate .. "_" .. currentTime .. ".csv"
     -- Abre o arquivo para escrita
     local file = io.open(filename, "w")
     if file then
@@ -106,7 +104,7 @@ function generateCSV(data)
         -- Escreve a linha no arquivo
       file:write(
         -- Monta a linha no formato CSV
-        execution.execution .. "," ..
+        execution.executionCount .. "," ..
         execution.dijkstra.time .. "," ..
         execution.aStarEuclidean.time .. "," ..
         execution.aStarManhattan.time .. "\n"

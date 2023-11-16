@@ -15,7 +15,7 @@ function pairsByKeys (t, f)
     end
     return iter
   end
-  
+
 -- Função para calcular o tempo de execução com maior precisão
 function measureExecutionTime(func)
   local startTime = os.time()  -- Marca o tempo de início em segundos
@@ -24,4 +24,11 @@ function measureExecutionTime(func)
   local elapsedTime = endTime - startTime  -- Calcula o tempo decorrido em segundos
   local decimalPart = os.clock()  -- Obtem a parte decimal da precisão do tempo
   return elapsedTime + decimalPart  -- Retorna o tempo decorrido em segundos com a precisão decimal
+end
+
+--  Gera o nome do arquivo
+function generateFilename(execution_info, table_algorithm)
+  -- Gera o nome do arquivo com a data e hora local
+  local filename = execution_info.executionCount .. "_graph_".. table_algorithm.name .. "_" .. execution_info.currentDate .. "_" .. execution_info.currentTime
+  return filename
 end
