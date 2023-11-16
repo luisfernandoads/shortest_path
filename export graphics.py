@@ -2,6 +2,7 @@ import glob
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 # Encontrar o arquivo .csv no diretório atual
 file_list = glob.glob('*.csv')
@@ -11,6 +12,7 @@ if len(file_list) == 0:
     exit()
 
 file_path = file_list[0]  # Seleciona o primeiro arquivo encontrado
+file_name = os.path.splitext(file_path)[0]  # Obtém o nome do arquivo sem a extensão
 
 # Carregar o arquivo CSV
 data = pd.read_csv(file_path)
@@ -33,7 +35,7 @@ plt.xticks(ind + width, data['execution'])
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('tempo_execucao_barras.svg', format='svg')
+plt.savefig(f'{file_name}_tempo_execucao_barras.svg', format='svg')
 plt.show()
 
 # Gerar gráfico para o peso do caminho e salvar em SVG
@@ -48,7 +50,7 @@ plt.xticks(ind + width, data['execution'])
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('peso_caminho_barras.svg', format='svg')
+plt.savefig(f'{file_name}_peso_caminho_barras.svg', format='svg')
 plt.show()
 
 # Gerar gráfico para o número de arestas e salvar em SVG
@@ -63,5 +65,5 @@ plt.xticks(ind + width, data['execution'])
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('num_arestas_barras.svg', format='svg')
+plt.savefig(f'{file_name}_num_arestas_barras.svg', format='svg')
 plt.show()
