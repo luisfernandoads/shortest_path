@@ -37,7 +37,7 @@ for file_path in file_list:
     plt.grid(True)
     plt.tight_layout()
     plt.savefig(f'{file_name}_tempo_execucao_barras.svg', format='svg')
-    plt.show()
+    #plt.show()
 
     # Gerar gráfico para o peso do caminho e salvar em SVG
     plt.figure(figsize=(10, 6))
@@ -53,7 +53,7 @@ for file_path in file_list:
     plt.grid(True)
     plt.tight_layout()
     plt.savefig(f'{file_name}_peso_caminho_barras.svg', format='svg')
-    plt.show()
+    #plt.show()
 
     # Gerar gráfico para o número de arestas e salvar em SVG
     plt.figure(figsize=(10, 6))
@@ -69,4 +69,4 @@ for file_path in file_list:
     plt.grid(True)
     plt.tight_layout()
     plt.savefig(f'{file_name}_num_arestas_barras.svg', format='svg')
-    plt.show()
+    #plt.show()
