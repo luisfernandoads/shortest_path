@@ -55,40 +55,6 @@ function pathDijkstra(graph, start, goal)
     return path  -- Retorna o caminho encontrado
 end
 
--- Função para busca em profundidade (DFS)
-function depthFirstSearch(graph, start, goal)
-    local startNode = start.row * indexMultiplier + start.col
-    local goalNode = goal.row * indexMultiplier + goal.col
-
-    local visited = {}  -- Tabela para rastrear nós visitados
-    local path = {}  -- Tabela para armazenar o caminho
-
-    local function dfs(node)
-        visited[node] = true  -- Marca o nó atual como visitado
-        table.insert(path, node)  -- Adiciona o nó atual ao caminho
-
-        if node == goalNode then
-            return true  -- Retorna verdadeiro se o nó de destino for alcançado
-        end
-
-        -- pairsByKeys para ordenar antes era pairs
-        for neighbor, _ in pairsByKeys(graph[node] or {}) do
-            if not visited[neighbor] and dfs(neighbor) then
-                return true  -- Retorna verdadeiro se o caminho for encontrado
-            end
-        end
-
-        table.remove(path)  -- Remove o nó atual do caminho
-        return false
-    end
-
-    if dfs(startNode) then
-        return path  -- Retorna o caminho encontrado
-    else
-        return nil  -- Nenhum caminho encontrado
-    end
-end
-
 -- Função para calcular o caminho mais curto com o algoritmo aStar (A*)
 -- A heuristica utilizada deve ser passada como argumento
 function pathAStar(graph, start, goal, heuristicFunction)
