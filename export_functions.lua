@@ -100,18 +100,15 @@ function generateCSV(data)
     local file = io.open(filename, "w")
     if file then
     -- Cabeçalho do CSV
-    file:write("count,time,name,weight,edges,file\n")
+    file:write("execution,dijkstra_time,aStarEuclidean_time\n")
     -- Escreve os dados das execuções no arquivo
     for i, execution in ipairs(data) do
         -- Escreve a linha no arquivo
       file:write(
         -- Monta a linha no formato CSV
-        --execution.count .. "," ..
-        execution.time .. "," ..
-        execution.name .. "," ..
-        execution.weight .. "," ..
-        execution.edges .. "," ..
-        execution.file .. "\n"
+        execution.execution .. "," ..
+        execution.dijkstra.time .. "," ..
+        execution.aStarEuclidean.time .. "\n"
       )
     end
     -- Fecha o arquivo

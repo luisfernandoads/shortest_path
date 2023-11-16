@@ -35,8 +35,8 @@ local silent = arg[8] or false
 obstacle = 0
 -- Contador de execuções
 local count = 1
--- Tabela para armazenar os dados das execuções
-local executionsData = {}
+-- Tabela para armazenar os dados das execuções a serem exportados
+local exportData = {}
 -- Um multiplicador usado para indexar células em uma grade ou matriz
 -- Calcula um índice exclusivo para cada célula em uma grade ou matriz bidimensional.
 indexMultiplier = 10 ^ math.ceil(math.log10(rows * cols))
@@ -45,14 +45,15 @@ while count <= executions do
   -- Tabelas de cada algoritmo
   -- As tabelas devem estar dentro do loop como variaveis locais
   -- Para registrar os valores corretamente
+  -- Tabela do algoritmo de Dijkstra
   local dijkstra = {}
   dijkstra.name = "dijkstra"
-  -- nome do arquivo vazio no caso do modo silent
-  dijkstra.file = ""
-  local aStar = {}
-  aStar.name = "aStar"
-  -- nome do arquivo vazio no caso do modo silent
-  dijkstra.file = ""
+  dijkstra.file = "" -- nome do arquivo vazio no caso do modo silent
+  -- Tabela do algoritmo aStar (A*) com heuristica de distancia distância Euclidiana
+  local aStarEuclidean = {}
+  aStarEuclidean.name = "astar_euclidean"
+  
+  dijkstra.file = ""-- nome do arquivo vazio no caso do modo silent
   -- Cria mapa
   -- Repete a criação do mapa caso os caminhos não sejam possíveis
   repeat
@@ -67,15 +68,22 @@ while count <= executions do
     -- Quantidade de arestas no caminho com Dijkstra
     dijkstra.edges = #dijkstra.path
     -- Calcula o caminho mais curto com aStar (A*) e seu tempo de execução
-    aStar.time = measureExecutionTime(function()
-      aStar.path = pathAStar(grafo, start, goal, heuristicEuclidean)  -- Chamada à função aStar
+    -- Com heuristica de distancia distância Euclidiana
+    aStarEuclidean.time = measureExecutionTime(function()
+      aStarEuclidean.path = pathAStar(grafo, start, goal, heuristicEuclidean)  -- Chamada à função aStar
     end)
     -- Quantidade de arestas no caminho com aStar (A*)
-    aStar.edges = #aStar.path
-  until dijkstra.edges > 1 and aStar.edges > 1
- -- Adicione os dados da execução à tabela de dados de execuções
- table.insert(executionsData, dijkstra)
- table.insert(executionsData, aStar)
+    -- Com heuristica de distancia distância Euclidiana
+    aStarEuclidean.edges = #aStarEuclidean.path
+  until dijkstra.edges > 1 and aStarEuclidean.edges > 1
+
+  -- Tabela para armazenar os dados das execuções
+  local executionData = {}
+  executionData.execution = count
+  executionData.dijkstra = dijkstra
+  executionData.aStarEuclidean = aStarEuclidean
+  -- Adicione os dados da execução à tabela de dados de execuções
+  table.insert(exportData, executionData)
 
   -- Modo silencioso, executa saidas somente se silent for false
   if not silent then
@@ -98,25 +106,26 @@ while count <= executions do
   print("Arestas do caminho com Dijkstra " .. dijkstra.edges)
   print("Peso do caminho com Dijkstra " .. dijkstra.weight)
   print("\n")
-  print("Caminho com aStar (A*)")
-  printPathAsLuaTable(aStar.path)
-  aStar.weight = calculatePathWeight(grafo, aStar.path)
-  print("Tempo com aStar (A*) " .. aStar.time)
-  print("Arestas do caminho com aStar (A*) " .. aStar.edges)
-  print("Peso do caminho com aStar (A*) " .. aStar.weight)
+  print("aStarEuclidean (A*) com heuristica de distancia distância Euclidiana")
+  print("Caminho com aStarEuclidean (A*)")
+  printPathAsLuaTable(aStarEuclidean.path)
+  aStarEuclidean.weight = calculatePathWeight(grafo, aStarEuclidean.path)
+  print("Tempo com aStarEuclidean (A*) " .. aStarEuclidean.time)
+  print("Arestas do caminho com aStarEuclidean (A*) " .. aStarEuclidean.edges)
+  print("Peso do caminho com aStarEuclidean (A*) " .. aStarEuclidean.weight)
   print("\n")
   print("Exportando grafos")
   -- Passar contador de execuções como parâmetro para nao sobrescrever os arquivos
   dijkstra.file = exportGraphAsDotWithSubgraph(grafo, dijkstra.path, dijkstra.name, count)
-  aStar.file = exportGraphAsDotWithSubgraph(grafo, aStar.path, aStar.name, count)
+  aStarEuclidean.file = exportGraphAsDotWithSubgraph(grafo, aStarEuclidean.path, aStarEuclidean.name, count)
   print("\n")
   print("Convertendo dot para svg com Graphviz")
   generateSVGFromDotFile(dijkstra.file)
-  generateSVGFromDotFile(aStar.file)
+  generateSVGFromDotFile(aStarEuclidean.file)
   end
     -- Contador de execuções
     count = count + 1
 end
 
 -- Chame a função para gerar o arquivo CSV
-generateCSV(executionsData)
+generateCSV(exportData)
