@@ -89,7 +89,9 @@ function depthFirstSearch(graph, start, goal)
     end
 end
 
-function pathAStar(graph, start, goal)
+-- Função para calcular o caminho mais curto com o algoritmo aStar (A*)
+-- A heuristica utilizada deve ser passada como argumento
+function pathAStar(graph, start, goal, heuristicFunction)
     local visited = {}    -- Tabela para rastrear nós visitados
     local distance = {}   -- Tabela para armazenar distâncias
     local previous = {}   -- Tabela para rastrear predecessores
@@ -98,7 +100,7 @@ function pathAStar(graph, start, goal)
     for node, _ in pairs(graph) do
         distance[node] = math.huge    -- Inicializa todas as distâncias como infinito
         previous[node] = nil          -- Inicializa todos os predecessores como nulos
-        heuristic[node] = calculateHeuristic(node, goal)  -- Calcula a heurística para o nó
+        heuristic[node] = heuristicFunction(node, goal)  -- Calcula a heurística para o nó
     end
 
     local startNode = start.row * indexMultiplier + start.col
@@ -147,16 +149,30 @@ function pathAStar(graph, start, goal)
     return path  -- Retorna o caminho encontrado
 end
 
--- Função que calcula a heurística entre um nó e o objetivo
-function calculateHeuristic(node, goal)
+-- Função que calcula a heurística entre um nó e o objetivo utilizando distância Euclidiana
+function heuristicEuclidean(node, goal)
     -- Obtém a linha e a coluna do nó
     local nodeRow = math.floor(node / indexMultiplier)  -- Obtém a linha do nó na matriz
     local nodeCol = node % indexMultiplier  -- Obtém a coluna do nó na matriz
     local goalRow = goal.row  -- Obtém a linha do objetivo
     local goalCol = goal.col  -- Obtém a coluna do objetivo
 
-    -- Calcula a distância euclidiana entre os nós (heurística)
+    -- Calcula a distância Euclidiana entre os nós (heurística)
     local heuristicValue = math.sqrt((goalRow - nodeRow)^2 + (goalCol - nodeCol)^2)
+
+    return heuristicValue  -- Retorna o valor heurístico calculado
+end
+
+-- Função que calcula a heurística entre um nó e o objetivo utilizando distância de Manhattan
+function heuristicManhattan(node, goal)
+    -- Obtém a linha e a coluna do nó
+    local nodeRow = math.floor(node / indexMultiplier)  -- Obtém a linha do nó na matriz
+    local nodeCol = node % indexMultiplier  -- Obtém a coluna do nó na matriz
+    local goalRow = goal.row  -- Obtém a linha do objetivo
+    local goalCol = goal.col  -- Obtém a coluna do objetivo
+
+    -- Calcula a distância de Manhattan entre os nós (heurística)
+    local heuristicValue = math.abs(goalRow - nodeRow) + math.abs(goalCol - nodeCol)
 
     return heuristicValue  -- Retorna o valor heurístico calculado
 end

@@ -35,17 +35,24 @@ local silent = arg[8] or false
 obstacle = 0
 -- Contador de execuções
 local count = 1
+-- Tabela para armazenar os dados das execuções
+local executionsData = {}
 -- Um multiplicador usado para indexar células em uma grade ou matriz
 -- Calcula um índice exclusivo para cada célula em uma grade ou matriz bidimensional.
 indexMultiplier = 10 ^ math.ceil(math.log10(rows * cols))
 
--- Tabelas de cada algoritmo
-dijkstra = {}
-dijkstra.name = "dijkstra"
-aStar = {}
-aStar.name = "aStar"
-
 while count <= executions do
+  -- Tabelas de cada algoritmo
+  -- As tabelas devem estar dentro do loop como variaveis locais
+  -- Para registrar os valores corretamente
+  local dijkstra = {}
+  dijkstra.name = "dijkstra"
+  -- nome do arquivo vazio no caso do modo silent
+  dijkstra.file = ""
+  local aStar = {}
+  aStar.name = "aStar"
+  -- nome do arquivo vazio no caso do modo silent
+  dijkstra.file = ""
   -- Cria mapa
   -- Repete a criação do mapa caso os caminhos não sejam possíveis
   repeat
@@ -61,11 +68,14 @@ while count <= executions do
     dijkstra.edges = #dijkstra.path
     -- Calcula o caminho mais curto com aStar (A*) e seu tempo de execução
     aStar.time = measureExecutionTime(function()
-      aStar.path = pathAStar(grafo, start, goal)  -- Chamada à função aStar
+      aStar.path = pathAStar(grafo, start, goal, heuristicEuclidean)  -- Chamada à função aStar
     end)
     -- Quantidade de arestas no caminho com aStar (A*)
     aStar.edges = #aStar.path
   until dijkstra.edges > 1 and aStar.edges > 1
+ -- Adicione os dados da execução à tabela de dados de execuções
+ table.insert(executionsData, dijkstra)
+ table.insert(executionsData, aStar)
 
   -- Modo silencioso, executa saidas somente se silent for false
   if not silent then
@@ -107,3 +117,6 @@ while count <= executions do
     -- Contador de execuções
     count = count + 1
 end
+
+-- Chame a função para gerar o arquivo CSV
+generateCSV(executionsData)

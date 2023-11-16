@@ -92,3 +92,33 @@ function generateSVGFromDotFile(dotFileName)
         print("\n")
     end
 end
+
+function generateCSV(data)
+    -- Nome do arquivo CSV
+    local filename = "executions_data.csv"
+    -- Abre o arquivo para escrita
+    local file = io.open(filename, "w")
+    if file then
+    -- Cabeçalho do CSV
+    file:write("count,time,name,weight,edges,file\n")
+    -- Escreve os dados das execuções no arquivo
+    for i, execution in ipairs(data) do
+        -- Escreve a linha no arquivo
+      file:write(
+        -- Monta a linha no formato CSV
+        --execution.count .. "," ..
+        execution.time .. "," ..
+        execution.name .. "," ..
+        execution.weight .. "," ..
+        execution.edges .. "," ..
+        execution.file .. "\n"
+      )
+    end
+    -- Fecha o arquivo
+    file:close()
+    print("Arquivo CSV gerado com sucesso: " .. filename)
+    else
+        print("Erro ao abrir o arquivo para escrita.")
+    end
+  end
+  
