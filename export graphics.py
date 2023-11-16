@@ -1,6 +1,7 @@
 import glob
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Encontrar o arquivo .csv no diretório atual
 file_list = glob.glob('*.csv')
@@ -14,41 +15,53 @@ file_path = file_list[0]  # Seleciona o primeiro arquivo encontrado
 # Carregar o arquivo CSV
 data = pd.read_csv(file_path)
 
+# Criar um array de índices para as barras
+ind = np.arange(len(data))
+
+# Configurações do gráfico
+width = 0.25
+
 # Gerar gráfico para o tempo de execução e salvar em SVG
 plt.figure(figsize=(10, 6))
-plt.plot(data['execution'], data['dijkstra_time'], marker='o', label='Dijkstra')
-plt.plot(data['execution'], data['aStarEuclidean_time'], marker='o', label='A* (Euclidean)')
-plt.plot(data['execution'], data['aStarManhattan_time'], marker='o', label='A* (Manhattan)')
+plt.bar(ind, data['dijkstra_time'], width, label='Dijkstra')
+plt.bar(ind + width, data['aStarEuclidean_time'], width, label='A* (Euclidean)')
+plt.bar(ind + 2 * width, data['aStarManhattan_time'], width, label='A* (Manhattan)')
 plt.xlabel('Execução')
 plt.ylabel('Tempo de Execução')
 plt.title('Tempo de Execução dos Algoritmos')
+plt.xticks(ind + width, data['execution'])
 plt.legend()
 plt.grid(True)
-plt.savefig('tempo_execucao.svg', format='svg')
+plt.tight_layout()
+plt.savefig('tempo_execucao_barras.svg', format='svg')
 plt.show()
 
 # Gerar gráfico para o peso do caminho e salvar em SVG
 plt.figure(figsize=(10, 6))
-plt.plot(data['execution'], data['dijkstra_weight'], marker='o', label='Dijkstra')
-plt.plot(data['execution'], data['aStarEuclidean_weight'], marker='o', label='A* (Euclidean)')
-plt.plot(data['execution'], data['aStarManhattan_weight'], marker='o', label='A* (Manhattan)')
+plt.bar(ind, data['dijkstra_weight'], width, label='Dijkstra')
+plt.bar(ind + width, data['aStarEuclidean_weight'], width, label='A* (Euclidean)')
+plt.bar(ind + 2 * width, data['aStarManhattan_weight'], width, label='A* (Manhattan)')
 plt.xlabel('Execução')
 plt.ylabel('Peso do Caminho')
 plt.title('Peso do Caminho dos Algoritmos')
+plt.xticks(ind + width, data['execution'])
 plt.legend()
 plt.grid(True)
-plt.savefig('peso_caminho.svg', format='svg')
+plt.tight_layout()
+plt.savefig('peso_caminho_barras.svg', format='svg')
 plt.show()
 
 # Gerar gráfico para o número de arestas e salvar em SVG
 plt.figure(figsize=(10, 6))
-plt.plot(data['execution'], data['dijkstra_edges'], marker='o', label='Dijkstra')
-plt.plot(data['execution'], data['aStarEuclidean_edges'], marker='o', label='A* (Euclidean)')
-plt.plot(data['execution'], data['aStarManhattan_edges'], marker='o', label='A* (Manhattan)')
+plt.bar(ind, data['dijkstra_edges'], width, label='Dijkstra')
+plt.bar(ind + width, data['aStarEuclidean_edges'], width, label='A* (Euclidean)')
+plt.bar(ind + 2 * width, data['aStarManhattan_edges'], width, label='A* (Manhattan)')
 plt.xlabel('Execução')
 plt.ylabel('Número de Arestas')
 plt.title('Número de Arestas dos Algoritmos')
+plt.xticks(ind + width, data['execution'])
 plt.legend()
 plt.grid(True)
-plt.savefig('num_arestas.svg', format='svg')
+plt.tight_layout()
+plt.savefig('num_arestas_barras.svg', format='svg')
 plt.show()
