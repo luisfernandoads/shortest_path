@@ -5,6 +5,7 @@ require("graph_functions")
 require("pathfinding_functions")
 require("print_functions")
 require("export_functions")
+require("mst")
 
 -- Obter os valores dos argumentos ou usar valores padrão
 
@@ -70,6 +71,27 @@ while count <= executions do
   repeat
     -- Gere um mapa aleatório
     map = generateRandomMap(rows, cols, start, goal)
+    -- Modifica o mapa aleatório com com a Minimum Spanning Tree
+    local positions = {
+      {start.row, start.col},
+      {2, 5},
+      {3, 7},
+      {4, 3},
+      {6, 4},
+      {7, 7},
+      {goal.row, goal.col}
+  }
+  local mapa = {
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+}
+    map = minimumSpanningTree(map, mapa)
     -- Gera um grafo ponderado
     grafo = createWeightedGraph(map)
 
