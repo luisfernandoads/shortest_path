@@ -3,7 +3,7 @@ function minimumSpanningTree(map, positions)
     math.randomseed(os.time()) -- Inicializa a semente de números aleatórios com o tempo atual
     local edges = {}
 
-    -- Função para calcular a distância entre dois pontos (posições) no mapa
+    -- Função para calcular a distância entre dois pontos (posições) no mapa considerando direções ortogonais
     local function distance(pos1, pos2)
         return math.abs(pos1[1] - pos2[1]) + math.abs(pos1[2] - pos2[2])
     end
@@ -60,20 +60,24 @@ function minimumSpanningTree(map, positions)
             local srcPos = positions[edge.src]
             local destPos = positions[edge.dest]
 
-            -- Marcar a aresta no mapa
+            -- Marcar a aresta no mapa (apenas nas direções ortogonais)
             while srcPos[1] ~= destPos[1] or srcPos[2] ~= destPos[2] do
+                if srcPos[1] ~= destPos[1] then
+                    if srcPos[1] < destPos[1] then
+                        srcPos[1] = srcPos[1] + 1
+                    else
+                        srcPos[1] = srcPos[1] - 1
+                    end
+                elseif srcPos[2] ~= destPos[2] then
+                    if srcPos[2] < destPos[2] then
+                        srcPos[2] = srcPos[2] + 1
+                    else
+                        srcPos[2] = srcPos[2] - 1
+                    end
+                end
                 map[srcPos[1]][srcPos[2]] = math.random(9) -- Valor para marcar a Minimum Spanning Tree no mapa
-                if srcPos[1] < destPos[1] then
-                    srcPos[1] = srcPos[1] + 1
-                elseif srcPos[1] > destPos[1] then
-                    srcPos[1] = srcPos[1] - 1
-                end
-                if srcPos[2] < destPos[2] then
-                    srcPos[2] = srcPos[2] + 1
-                elseif srcPos[2] > destPos[2] then
-                    srcPos[2] = srcPos[2] - 1
-                end
             end
+
 
             union(parent, rank, x, y)
         end
