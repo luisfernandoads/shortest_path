@@ -1,5 +1,6 @@
 -- Função MST que recebe um conjunto de posições e modifica o mapa com a Minimum Spanning Tree
 function minimumSpanningTree(map, positions)
+    math.randomseed(os.time()) -- Inicializa a semente de números aleatórios com o tempo atual
     local edges = {}
 
     -- Função para calcular a distância entre dois pontos (posições) no mapa
@@ -61,7 +62,7 @@ function minimumSpanningTree(map, positions)
 
             -- Marcar a aresta no mapa
             while srcPos[1] ~= destPos[1] or srcPos[2] ~= destPos[2] do
-                map[srcPos[1]][srcPos[2]] = 2 -- Valor para marcar a Minimum Spanning Tree no mapa
+                map[srcPos[1]][srcPos[2]] = math.random(9) -- Valor para marcar a Minimum Spanning Tree no mapa
                 if srcPos[1] < destPos[1] then
                     srcPos[1] = srcPos[1] + 1
                 elseif srcPos[1] > destPos[1] then
@@ -83,14 +84,14 @@ end
 
 -- Exemplo de utilização
 local mapa = {
-    { 1, 1, 1, 1, 1, 1, 1, 1 },
-    { 1, 1, 1, 1, 4, 1, 1, 1 },
     { 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 1, 1, 1, 1, 1, 0, 1, 1 },
-    { 1, 0, 1, 0, 0, 0, 1, 0 },
-    { 1, 0, 1, 9, 1, 0, 1, 1 },
-    { 1, 0, 0, 0, 1, 1, 9, 4 },
-    { 9, 1, 1, 1, 1, 1, 1, 1 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
 }
 
 local positions = {
