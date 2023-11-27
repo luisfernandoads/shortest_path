@@ -115,20 +115,6 @@ function pathAStar(graph, start, goal, heuristicFunction)
     return path  -- Retorna o caminho encontrado
 end
 
--- Função que calcula a heurística entre um nó e o objetivo utilizando distância Euclidiana
-function heuristicEuclidean(node, goal)
-    -- Obtém a linha e a coluna do nó
-    local nodeRow = math.floor(node / indexMultiplier)  -- Obtém a linha do nó na matriz
-    local nodeCol = node % indexMultiplier  -- Obtém a coluna do nó na matriz
-    local goalRow = goal.row  -- Obtém a linha do objetivo
-    local goalCol = goal.col  -- Obtém a coluna do objetivo
-
-    -- Calcula a distância Euclidiana entre os nós (heurística)
-    local heuristicValue = math.sqrt((goalRow - nodeRow)^2 + (goalCol - nodeCol)^2)
-
-    return heuristicValue  -- Retorna o valor heurístico calculado
-end
-
 -- Função que calcula a heurística entre um nó e o objetivo utilizando distância de Manhattan
 function heuristicManhattan(node, goal)
     -- Obtém a linha e a coluna do nó

@@ -1,7 +1,7 @@
 # CAMINHO MAIS CURTO - SHORTEST PATH
 
 Este projeto foi desenvolvido por:
-* ***Luis Fernando Alves da Silva – Líder do Projeto***
+* ***Luis Fernando Alves da Silva***
 * ***Matheus Otero Romano***
 * ***Pedro Ramires da Silva Amalfi Costa***
 
@@ -443,7 +443,7 @@ Grafo ponderado
 }
 
 ```
-Finalmente é informado o menor caminho para o Algoritmo de Dijkstra e A* com 2 Heuristicas (Euclidiana e Manhattan) conforme abaixo, bem como gerado dois arquivos para uma visualização dos caminhos encontrados.
+Finalmente é informado o menor caminho para o Algoritmo de Dijkstra e A* com heuristicas de distancia de Manhattan, conforme abaixo, bem como gerado dois arquivos para uma visualização dos caminhos encontrados.
 
 ```bash
 
@@ -454,15 +454,7 @@ Arestas do caminho com Dijkstra 10
 Peso do caminho com Dijkstra 50
 
 
-aStarEuclidean (A*) com heuristica de distancia dist├óncia Euclidiana
-Caminho com aStarEuclidean (A*)
-{304, 305, 405, 505, 506, 606, 607, 608, 708, 709}
-Tempo com aStarEuclidean (A*) 0.0
-Arestas do caminho com aStarEuclidean (A*) 10
-Peso do caminho com aStarEuclidean (A*) 50
-
-
-aStarEuclidean (A*) com heuristica de distancia dist├óncia de Manhattan
+aStarManhattan (A*) com heuristica de distancia de Manhattan
 Caminho com aStarManhattan (A*)
 {304, 305, 405, 505, 506, 606, 607, 608, 708, 709}
 Tempo com aStarManhattan (A*) 0.0
@@ -472,13 +464,11 @@ Peso do caminho com aStarManhattan (A*) 50
 
 Exportando grafos
 Grafo exportado como 2_graph_dijkstra_2023-11-16_14-04-36.dot
-Grafo exportado como 2_graph_astar_euclidean_2023-11-16_14-04-36.dot
 Grafo exportado como 2_graph_astar_manhattan_2023-11-16_14-04-36.dot
 
 
 Convertendo dot para svg com Graphviz
 Exportado para svg como 2_graph_dijkstra_2023-11-16_14-04-36.svg
-Exportado para svg como 2_graph_astar_euclidean_2023-11-16_14-04-36.svg
 Exportado para svg como 2_graph_astar_manhattan_2023-11-16_14-04-36.svg
 
 
@@ -811,7 +801,7 @@ Vale ressaltar que caso seja executado outra vez o mesmo comando com os mesmos v
 ## :memo: Entendendo os Resultados Gerados
 Depois de ver os caminhos, é interessante observar o arquivo gerado execution_data_xxxxxx.csv, nele estão os dados medidos na execução dos testes gerados.
 
-Na primeira coluna está informando qual é o teste, na segunda, terceira e quarta coluna está informando o tempo de execução (em microssegundos) do algoritmo de Dijkstra, AStarEuclidean e aStarManhattan.
+Na primeira coluna está informando qual é o teste, na segunda, terceira e quarta coluna está informando o tempo de execução (em microssegundos) do algoritmo de Dijkstra, e aStarManhattan.
 
 Quinta, sexta e Sétima coluna estão sendo informados os preços dos caminhos encontrados e na oitava, nona e décima colunas as quantidade de arestas percorridas entre o caminho inicial e final.
 

@@ -98,7 +98,7 @@ function generateCSV(data)
     local file = io.open(filename, "w")
     if file then
     -- Cabeçalho do CSV
-    file:write("execution,dijkstra_time,aStarEuclidean_time,aStarManhattan_time,dijkstra_weight,aStarEuclidean_weight,aStarManhattan_weight,dijkstra_edges,aStarEuclidean_edges,aStarManhattan_edges,dijkstra_file,aStarEuclidean_file,aStarManhattan_file")
+    file:write("execution,dijkstra_time,aStarManhattan_time,dijkstra_weight,aStarManhattan_weight,dijkstra_edges,aStarManhattan_edges,dijkstra_file,aStarManhattan_file")
     -- Adicionar quebra de linha
     file:write("\n")
     -- Escreve os dados das execuções no arquivo
@@ -108,16 +108,12 @@ function generateCSV(data)
         -- Monta a linha no formato CSV
         execution.executionCount .. "," ..
         execution.dijkstra.time .. "," ..
-        execution.aStarEuclidean.time .. "," ..
         execution.aStarManhattan.time .. "," ..
         execution.dijkstra.weight .. "," ..
-        execution.aStarEuclidean.weight .. "," ..
         execution.aStarManhattan.weight .. "," ..
         execution.dijkstra.edges .. "," ..
-        execution.aStarEuclidean.edges .. "," ..
         execution.aStarManhattan.edges .. "," ..
         execution.dijkstra.file .. "," ..
-        execution.aStarEuclidean.file .. "," ..
         execution.aStarManhattan.file .. "\n"
       )
     end

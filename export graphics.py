@@ -26,8 +26,7 @@ for file_path in file_list:
     # Gerar gráfico para o tempo de execução e salvar em SVG
     plt.figure(figsize=(10, 6))
     plt.bar(ind, data['dijkstra_time'], width, label='Dijkstra')
-    plt.bar(ind + width, data['aStarEuclidean_time'], width, label='A* (Euclidean)')
-    plt.bar(ind + 2 * width, data['aStarManhattan_time'], width, label='A* (Manhattan)')
+    plt.bar(ind + width, data['aStarManhattan_time'], width, label='A* (Manhattan)')
     plt.xlabel('Execução')
     plt.ylabel('Tempo de Execução')
     plt.title('Tempo de Execução dos Algoritmos')
@@ -42,8 +41,7 @@ for file_path in file_list:
     # Gerar gráfico para o peso do caminho e salvar em SVG
     plt.figure(figsize=(10, 6))
     plt.bar(ind, data['dijkstra_weight'], width, label='Dijkstra')
-    plt.bar(ind + width, data['aStarEuclidean_weight'], width, label='A* (Euclidean)')
-    plt.bar(ind + 2 * width, data['aStarManhattan_weight'], width, label='A* (Manhattan)')
+    plt.bar(ind + width, data['aStarManhattan_weight'], width, label='A* (Manhattan)')
     plt.xlabel('Execução')
     plt.ylabel('Peso do Caminho')
     plt.title('Peso do Caminho dos Algoritmos')
@@ -58,8 +56,7 @@ for file_path in file_list:
     # Gerar gráfico para o número de arestas e salvar em SVG
     plt.figure(figsize=(10, 6))
     plt.bar(ind, data['dijkstra_edges'], width, label='Dijkstra')
-    plt.bar(ind + width, data['aStarEuclidean_edges'], width, label='A* (Euclidean)')
-    plt.bar(ind + 2 * width, data['aStarManhattan_edges'], width, label='A* (Manhattan)')
+    plt.bar(ind + width, data['aStarManhattan_edges'], width, label='A* (Manhattan)')
     plt.xlabel('Execução')
     plt.ylabel('Número de Arestas')
     plt.title('Número de Arestas dos Algoritmos')
