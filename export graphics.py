@@ -5,16 +5,17 @@ import numpy as np
 import os
 
 def gerar_grafico_barras(data, file_name, y_data1, y_data2, ylabel, title, legend_labels, save_filename, execution_option):
-    ind = np.arange(len(data))
-    width = 0.25
+    bar_width = 0.35  # Width of each bar
+    num_executions = len(data)
+    index = np.arange(num_executions)  # Array with the index positions for bars
 
     plt.figure(figsize=(10, 6))
-    plt.bar(ind, data[y_data1], width, label=legend_labels[0])
-    plt.bar(ind + width, data[y_data2], width, label=legend_labels[1])
+    plt.bar(index, data[y_data1], bar_width, label=legend_labels[0])
+    plt.bar(index + bar_width, data[y_data2], bar_width, label=legend_labels[1])
     plt.xlabel(f"Número da Execução \n \n Opções de execução: {execution_option}")
     plt.ylabel(ylabel)
     plt.title(title)
-    plt.xticks(ind + width, data['execution'])
+    plt.xticks(index + bar_width / 2, data['execution'])  # Adjusting the x-axis ticks
     plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     plt.grid(True)
     plt.tight_layout()

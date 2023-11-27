@@ -23,6 +23,10 @@ local node_weigh = arg[4] or false
 local obstacle_path = arg[5] or false
 -- Configurar o número de execuções (arg6)
 local executions = tonumber(arg[6]) or 4
+-- Tamanho da matriz para aumento de complexidade
+local matrix_size = {}
+matrix_size.x = rows
+matrix_size.y = cols
 
 -- Variáveis do programa
 
@@ -135,8 +139,8 @@ while count <= executions do
   -- Contador de execuções
   count = count + 1
   -- Aumentar  complexidade
-  rows = rows * 2
-  cols = cols * 2
+  rows = rows + matrix_size.x
+  cols = cols + matrix_size.y
   -- Gerar novas coordenada
   start, goal = generateCoordinates(rows, cols, random_positions)
 end
