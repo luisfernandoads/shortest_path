@@ -5,14 +5,14 @@ function generateRandomMap(rows, cols, start, goal, weigh, obstacle)
     local map = {}  -- Inicializa o mapa vazio
 
     -- define o peso dos nos do mapa baseado no parametro passado
-    if weigh then
+    if weigh == "true" then
         node_weigh = 9
     else
         node_weigh = 1
     end
 
     -- define a quantidade de obstaculos no mapa baseado no parametro passado
-    if obstacle then
+    if obstacle == "true" then
         obstacle_rate = 0.2
     else
         obstacle_rate = 0

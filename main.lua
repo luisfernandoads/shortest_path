@@ -14,22 +14,26 @@ require("mst")
 local rows = arg[1] or 8
 -- Número de colunas (arg2)
 local cols = arg[2] or 8
+-- Parametros de execucao
+-- Pesos variaveis (arg3)
+local node_weigh = arg[3] or false
+-- Presenca de obstaculos (arg4)
+local obstacle_path = arg[4] or false
+-- Configurar o número de execuções (arg5)
+local executions = tonumber(arg[5]) or 1
 
 -- Coordenadas de início e final, representadas como pares de valores (linha, coluna)
--- Coordenada x de início (arg3)
-local row_start = arg[3] or 1
--- Coordenada y de início (arg4)
-local col_start = arg[4] or 1
+-- Coordenada x de início (arg6)
+local row_start = arg[6] or 1
+-- Coordenada y de início (arg7)
+local col_start = arg[7] or 1
 local start = {row = row_start, col = col_start}  -- Por exemplo, início na coordenada (1, 1)
--- Coordenada x do final (arg5)
-local row_goal = arg[5] or rows
--- Coordenada y do final (arg6)
-local col_goal = arg[6] or cols
+-- Coordenada x do final (arg8)
+local row_goal = arg[8] or rows
+-- Coordenada y do final (arg9)
+local col_goal = arg[9] or cols
 local goal = {row = row_goal, col = col_goal}  -- Por exemplo, meta na coordenada (8, 8)
--- Configurar o número de execuções
-local executions = tonumber(arg[7]) or 1
--- Configurar o modo silencioso (arg8)
-local silent = arg[8] or false
+
 
 -- Variáveis do programa
 
@@ -99,8 +103,6 @@ while count <= executions do
   -- Adicione os dados da execução à tabela de dados de execuções
   table.insert(exportData, executionData)
 
-  -- Modo silencioso, executa saidas somente se silent for false
-  if not silent then
   -- Saídas no terminal
   print("Matriz de adjacencia")
   print("Tamanho: " .. rows .. "x" .. cols)
@@ -136,9 +138,9 @@ while count <= executions do
   print("Convertendo dot para svg com Graphviz")
   generateSVGFromDotFile(dijkstra.file)
   generateSVGFromDotFile(aStarManhattan.file)
-  end
-    -- Contador de execuções
-    count = count + 1
+
+  -- Contador de execuções
+  count = count + 1
 end
 
 -- Chame a função para gerar o arquivo CSV
