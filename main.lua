@@ -32,8 +32,7 @@ local executions = tonumber(arg[7]) or 1
 local silent = arg[8] or false
 
 -- Variáveis do programa
--- Valor dos obstáculos
-obstacle = 0
+
 -- Contador de execuções
 local count = 1
 -- Tabela para armazenar os dados das execuções a serem exportados
@@ -66,28 +65,8 @@ while count <= executions do
   -- Repete a criação do mapa caso os caminhos não sejam possíveis
   repeat
     -- Gere um mapa aleatório
-    map = generateRandomMap(rows, cols, start, goal)
-    -- Modifica o mapa aleatório com com a Minimum Spanning Tree
-    local positions = {
-      {start.row, start.col},
-      {2, 5},
-      {3, 7},
-      {4, 3},
-      {6, 4},
-      {7, 7},
-      {goal.row, goal.col}
-  }
-  local mapa = {
-    { 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0, 0 },
-}
-    map = minimumSpanningTree(map, mapa)
+    map = generateRandomMap(rows, cols, start, goal, node_weigh, obstacle_path)
+
     -- Gera um grafo ponderado
     grafo = createWeightedGraph(map)
 

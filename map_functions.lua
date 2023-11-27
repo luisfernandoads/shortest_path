@@ -1,8 +1,22 @@
 -- Função para gerar um mapa aleatório
-function generateRandomMap(rows, cols, start, goal)
+function generateRandomMap(rows, cols, start, goal, weigh, obstacle)
     math.randomseed(os.time()) -- Inicializa a semente de números aleatórios com o tempo atual
 
     local map = {}  -- Inicializa o mapa vazio
+
+    -- define o peso dos nos do mapa baseado no parametro passado
+    if weigh then
+        node_weigh = 9
+    else
+        node_weigh = 1
+    end
+
+    -- define a quantidade de obstaculos no mapa baseado no parametro passado
+    if obstacle then
+        obstacle_rate = 0.2
+    else
+        obstacle_rate = 0
+    end
 
     -- Função para verificar se um valor é válido
     local function isValid(value, r, c)
@@ -55,11 +69,11 @@ function generateRandomMap(rows, cols, start, goal)
         for c = 1, cols do
             local value
             -- Gere obstáculos aleatórios com base na probabilidade
-            if math.random() < 0.2 then
+            if math.random() < obstacle_rate then -- gera os obstaculos dos nos do mapa
                 value = 0
             else
                 repeat
-                    value = math.random(9)
+                    value = math.random(node_weigh) -- gera os pesos dos nos do mapa
                 until isValid(value, r, c)
             end
             map[r][c] = value
