@@ -25,10 +25,27 @@ function measureExecutionTime(func)
   return elapsedTime
 end
 
-
 --  Gera o nome do arquivo
 function generateFilename(execution_info, table_algorithm)
   -- Gera o nome do arquivo com a data e hora local
   local filename = execution_info.executionCount .. "_graph_".. table_algorithm.name .. "_" .. execution_info.currentDate .. "_" .. execution_info.currentTime
   return filename
+end
+
+-- Função para comparar tabelas
+function compareTables(table1, table2)
+  -- Verifica se as tabelas têm o mesmo tamanho
+  if #table1 ~= #table2 then
+      return false
+  end
+
+  -- Compara cada elemento das tabelas
+  for key, value in pairs(table1) do
+      -- Verifica se os valores nas mesmas chaves são diferentes entre as tabelas
+      if table2[key] ~= value then
+          return false  -- Se houver diferença, as tabelas não são iguais
+      end
+  end
+
+  return true  -- Se todas as comparações forem iguais, as tabelas são consideradas iguais
 end

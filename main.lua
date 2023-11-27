@@ -3,6 +3,7 @@ require("utils_functions")
 require("map_functions")
 require("graph_functions")
 require("pathfinding_functions")
+require("position_functions")
 require("print_functions")
 require("export_functions")
 require("mst")
@@ -14,29 +15,19 @@ require("mst")
 local rows = arg[1] or 8
 -- Número de colunas (arg2)
 local cols = arg[2] or 8
--- Parametros de execucao
--- Pesos variaveis (arg3)
-local node_weigh = arg[3] or false
--- Presenca de obstaculos (arg4)
-local obstacle_path = arg[4] or false
--- Configurar o número de execuções (arg5)
-local executions = tonumber(arg[5]) or 1
-
--- Coordenadas de início e final, representadas como pares de valores (linha, coluna)
--- Coordenada x de início (arg6)
-local row_start = arg[6] or 1
--- Coordenada y de início (arg7)
-local col_start = arg[7] or 1
-local start = {row = row_start, col = col_start}  -- Por exemplo, início na coordenada (1, 1)
--- Coordenada x do final (arg8)
-local row_goal = arg[8] or rows
--- Coordenada y do final (arg9)
-local col_goal = arg[9] or cols
-local goal = {row = row_goal, col = col_goal}  -- Por exemplo, meta na coordenada (8, 8)
-
+-- Parametros que define se início e final sao aleatorios (arg3)
+local random_positions = arg[3] or false
+-- Pesos variaveis (arg4)
+local node_weigh = arg[4] or false
+-- Presenca de obstaculos (arg5)
+local obstacle_path = arg[5] or false
+-- Configurar o número de execuções (arg6)
+local executions = tonumber(arg[6]) or 4
 
 -- Variáveis do programa
 
+-- Coordenadas
+local start, goal = generateCoordinates(rows, cols, random_positions)
 -- Contador de execuções
 local count = 1
 -- Tabela para armazenar os dados das execuções a serem exportados
@@ -141,6 +132,11 @@ while count <= executions do
 
   -- Contador de execuções
   count = count + 1
+  -- Aumentar  complexidade
+  rows = rows * 2
+  cols = cols * 2
+  -- Gerar novas coordenada
+  start, goal = generateCoordinates(rows, cols, random_positions)
 end
 
 -- Chame a função para gerar o arquivo CSV
