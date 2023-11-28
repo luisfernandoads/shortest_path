@@ -6,7 +6,6 @@ require("pathfinding_functions")
 require("position_functions")
 require("print_functions")
 require("export_functions")
-require("mst")
 
 -- Obter os valores dos argumentos ou usar valores padrão
 
@@ -49,7 +48,7 @@ while count <= executions do
   executionData.currentDate = os.date("%Y-%m-%d")
   executionData.currentTime = os.date("%H-%M-%S")
   executionData.info = "size=" .. rows .. "x" .. cols .. ", start=[" .. start.row .. "," .. start.col .. "], goal=[" .. goal.row .. "," .. goal.col.. "]"
-  executionData.option = "random=" .. random_positions .. ", weigh=" .. node_weigh .. ", obstacle=" .. obstacle_path
+  executionData.option = "random=" .. tostring(random_positions) .. ", weigh=" .. tostring(node_weigh) .. ", obstacle=" .. tostring(obstacle_path)
   -- Tabelas de cada algoritmo
   -- As tabelas devem estar dentro do loop como variaveis locais
   -- Para registrar os valores corretamente
