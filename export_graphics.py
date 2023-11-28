@@ -34,7 +34,7 @@ for file_path in file_list:
 
     execution_option = data['execution_option'].iloc[0]  # Obtendo a primeira ocorrência de 'execution_option'
 
-    gerar_grafico_barras(data, file_name, 'dijkstra_time', 'aStarManhattan_time', 'Tempo de Execução (ms)',
+    gerar_grafico_barras(data, file_name, 'dijkstra_time', 'aStarManhattan_time', 'Tempo de Execução (s)',
                          'Tempo de Execução dos Algoritmos \n', ['Dijkstra', 'A* (Manhattan)'],
                          f'{file_name}_tempo_execucao_barras.svg', execution_option)
 
